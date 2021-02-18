@@ -1,5 +1,14 @@
 let books = []
 
+let storageItems = window.localStorage.getItem('books');
+storageItems = JSON.parse(storageItems);
+if (storageItems){
+storageItems.forEach(book => {
+    let newBook = new Book(book.title, book.author, book.readStatus, book.readStatus);
+    books.push(newBook);
+})
+}
+
 function Book(title, author, pages, readStatus) {
     this.title = title;
     this.author = author;
@@ -70,17 +79,19 @@ function displayBook(book) {
     readButton.textContent = "Read";
     let removeButton = document.createElement("button");
     removeButton.textContent = "Delete";
-    removeButton.setAttribute("data-attribute", books.indexOf(book));
+    removeButton.setAttribute("data-attribute", books.indexOf(book).toString());
     removeButton.setAttribute("id", "deleteBooks")
 
     removeButton.addEventListener('click', () => {
-        delete books[removeButton.getAttribute("data-attribute")];
+        books.splice(Number(removeButton.getAttribute("data-attribute")), 1);
         removeButton.parentNode.parentNode.parentNode.remove();
+        let stringifyBooks = JSON.stringify(books)
+        window.localStorage.setItem('books', stringifyBooks);
     })
 
     readButton.addEventListener('click', () => {
     
-        statusField = document.getElementById("status"+removeButton.getAttribute("data-attribute"));
+        let statusField = document.getElementById("status"+removeButton.getAttribute("data-attribute"));
         book.changeStatus();
         statusField.textContent = stringifyReadStatus(book.readStatus);
 
@@ -105,13 +116,6 @@ function displayBook(book) {
 
 }
 
-function changeReadStatus(index) {
-    readStatus = document.getElementById("status" + index);
-    book = books[index];
-    book.changeStatus();
-    readStatus.textContent = stringifyReadStatus(book.readStatus);
-}
-
 function hideButton() {
     let addBookButton = document.getElementById('addBook');
     addBookButton.classList.toggle('hidden');
@@ -123,7 +127,9 @@ function listBooks(books) {
 
 let addBookButton = document.getElementById('addBook');
 addBookButton.addEventListener('click', () => {
-    createForm(), hideButton(), submitForm()
+    createForm();
+    hideButton();
+    submitForm();
 })
 
 function createBook() {
@@ -132,9 +138,9 @@ function createBook() {
     let inputPages = document.getElementById('pages');
     let inputReadStatus = document.getElementById('read');
     let newBook = new Book(inputTitle.value, inputAuthor.value, inputPages.value, inputReadStatus.checked);
-    books.push(newBook);
-
-    
+    books.push(newBook)
+    let stringifyBooks = JSON.stringify(books)
+    window.localStorage.setItem('books', stringifyBooks);
 }
 
 function destroyForm() {
@@ -145,8 +151,12 @@ function destroyForm() {
 function submitForm() {
     let submitButton = document.getElementById('addRecord');
     submitButton.addEventListener('click', () => {
-        createBook(), displayBook(books[(books.length - 1)]), hideButton(), destroyForm()
+        createBook();
+        displayBook(books[(books.length - 1)]);
+        hideButton();
+        destroyForm();
     });
 }
-
-
+if(books.length > 0){
+listBooks(books);
+}

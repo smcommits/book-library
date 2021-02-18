@@ -104,12 +104,6 @@ h1 span {
   color: #167f92;
 }
 
-.call-to-action {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
 #addBook {
   display: block;
   margin-left: auto;
