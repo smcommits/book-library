@@ -43,8 +43,18 @@ function createForm() {
     table.appendChild(form);
 }
 
+function stringifyReadStatus(readStatus) {
+    if (readStatus) {
+        return "Book Read";
+    }
+    else {
+        return "Unread"
+    }
+}
+
 function displayBook(book) {
     let tableRow = document.createElement("tr");
+    tableRow.setAttribute("id", "book-"+books.indexOf(book))
     let bookTitle = document.createElement("td");
     bookTitle.textContent = book.title;
     let bookAuthor = document.createElement("td");
@@ -52,13 +62,31 @@ function displayBook(book) {
     let bookPages = document.createElement("td");
     bookPages.textContent = book.pages;
     let readStatus = document.createElement("td");
-    readStatus.textContent = book.readStatus;
+    readStatus.setAttribute("id", "status"+books.indexOf(book));
+    readStatus.textContent = stringifyReadStatus(book.readStatus);
     let buttonTd = document.createElement("td");
     let buttonContainer = document.createElement('div');
     let readButton = document.createElement("button");
     readButton.textContent = "Read";
     let removeButton = document.createElement("button");
     removeButton.textContent = "Delete";
+    removeButton.setAttribute("data-attribute", books.indexOf(book));
+    removeButton.setAttribute("id", "deleteBooks")
+
+    removeButton.addEventListener('click', () => {
+        delete books[removeButton.getAttribute("data-attribute")];
+        removeButton.parentNode.parentNode.parentNode.remove();
+    })
+
+    readButton.addEventListener('click', () => {
+    
+        statusField = document.getElementById("status"+removeButton.getAttribute("data-attribute"));
+        book.changeStatus();
+        statusField.textContent = stringifyReadStatus(book.readStatus);
+
+    })
+
+ 
 
     buttonContainer.appendChild(readButton);
     buttonContainer.appendChild(removeButton);
@@ -72,6 +100,16 @@ function displayBook(book) {
 
     let table = document.getElementById('table');
     table.appendChild(tableRow);
+
+ 
+
+}
+
+function changeReadStatus(index) {
+    readStatus = document.getElementById("status" + index);
+    book = books[index];
+    book.changeStatus();
+    readStatus.textContent = stringifyReadStatus(book.readStatus);
 }
 
 function hideButton() {
@@ -95,6 +133,8 @@ function createBook() {
     let inputReadStatus = document.getElementById('read');
     let newBook = new Book(inputTitle.value, inputAuthor.value, inputPages.value, inputReadStatus.checked);
     books.push(newBook);
+
+    
 }
 
 function destroyForm() {
@@ -108,3 +148,5 @@ function submitForm() {
         createBook(), displayBook(books[(books.length - 1)]), hideButton(), destroyForm()
     });
 }
+
+
