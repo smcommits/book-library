@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title></title>
+  <title> Book Records</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
 </head>
 <body>
   <h1>Books</h1>
 
 <table class="responstable" id="table">
-  
+
   <tr>
     <th>Title</th>
     <th data-th="Book Details"><span>Author</span></th>
@@ -17,7 +18,7 @@
     <th>Read Status</th>
     <th></th>
   </tr>
-  
+
   <tr>
     <td>Something</td>
     <td>Steve</td>
@@ -30,8 +31,23 @@
       </div>
     </td>
   </tr>
+  <tr>
+      <td><input type="text" id="title" placeholder="Book Title" name="title"></td>
+      <td><input type="text" id="author" placeholder="Author" name="author"></td>
+      <td><input type="text" id="pages" placeholder="Pages" name="pages"></td>
+      <td><input type="checkbox" name="read" checked> Read Status </td>
+      <td><button type="submit">Submit</button></td>
+  </tr>
 
-   
+
+
+
+
+
+
+
 </table>
+<button type="submit" id="addBook"><i class="fas fa-plus-circle"></i></button>
+  <script src="script.js"></script>
 </body>
 </html>
