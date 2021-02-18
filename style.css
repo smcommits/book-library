@@ -118,3 +118,7 @@ h1 span {
 #addBook:hover {
   opacity: 0.7;
 }
+
+.hidden {
+  visibility: hidden;
+}
