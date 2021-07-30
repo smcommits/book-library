@@ -43,7 +43,6 @@ This projects is a book library. Using the application, a user can store new boo
 👤 **Sinan Sevgi**
   - GitHub: [@sinansevgi](https://github.com/sinansevgi)
   - LinkedIn: [@sinansevgi](https://www.linkedin.com/in/sinansevgi/)
-  - Twitter: [@nativeofcybers1](https://twitter.com/nativeofcybers1)
   - Portfolio: [Website](https://sinansevgi.com)
 
 
